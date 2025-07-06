@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Set Theory Learning Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>🔄 Set Theory Explorer</h1>
+        <p>Interactive learning tool for understanding sets, unions, intersections, and more!</p>
+    </header>
+
+    <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="venn">Interactive Venn Diagram</button>
+        <button class="tab-btn" data-tab="operations">Set Operations</button>
+        <button class="tab-btn" data-tab="problems">Practice Problems</button>
+        <button class="tab-btn" data-tab="reference">Quick Reference</button>
+    </nav>
+
+    <!-- Venn Diagram Tab -->
+    <div id="venn" class="tab-content active">
+        <div class="venn-container">
+            <div class="controls">
+                <h3>Interactive Venn Diagram</h3>
+                <div class="set-controls">
+                    <div class="set-input">
+                        <label for="setA">Set A:</label>
+                        <input type="text" id="setA" placeholder="1,2,3,4,5" value="1,2,3,4,5">
+                        <span class="set-color" style="background: #ff6b6b;"></span>
+                    </div>
+                    <div class="set-input">
+                        <label for="setB">Set B:</label>
+                        <input type="text" id="setB" placeholder="4,5,6,7,8" value="4,5,6,7,8">
+                        <span class="set-color" style="background: #4ecdc4;"></span>
+                    </div>
+                    <div class="set-input">
+                        <label for="universal">Universal Set U:</label>
+                        <input type="text" id="universal" placeholder="1,2,3,4,5,6,7,8,9,10" value="1,2,3,4,5,6,7,8,9,10">
+                    </div>
+                </div>
+                <div class="operation-controls">
+                    <h4>Select Operation:</h4>
+                    <div class="operation-buttons">
+                        <button class="op-btn active" data-op="none">Show Sets</button>
+                        <button class="op-btn" data-op="union">A ∪ B</button>
+                        <button class="op-btn" data-op="intersection">A ∩ B</button>
+                        <button class="op-btn" data-op="difference">A - B</button>
+                        <button class="op-btn" data-op="complement-a">A'</button>
+                        <button class="op-btn" data-op="complement-b">B'</button>
+                    </div>
+                </div>
+                <button id="updateVenn" class="update-btn">Update Diagram</button>
+            </div>
+            
+            <div class="venn-diagram">
+                <svg id="vennSvg" width="500" height="400">
+                    <!-- Venn diagram will be drawn here -->
+                </svg>
+                <div class="result-display">
+                    <h4>Result:</h4>
+                    <div id="operationResult">Click "Show Sets" to begin</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Set Operations Tab -->
+    <div id="operations" class="tab-content">
+        <div class="operations-container">
+            <h3>Set Operations Calculator</h3>
+            <div class="calculator">
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label>Set A:</label>
+                        <input type="text" id="calcSetA" placeholder="Enter elements separated by commas">
+                    </div>
+                    <div class="input-group">
+                        <label>Set B:</label>
+                        <input type="text" id="calcSetB" placeholder="Enter elements separated by commas">
+                    </div>
+                    <div class="input-group">
+                        <label>Universal Set (for complements):</label>
+                        <input type="text" id="calcUniversal" placeholder="Enter universal set elements">
+                    </div>
+                </div>
+                
+                <div class="calc-operations">
+                    <button class="calc-btn" data-calc="union">Union (A ∪ B)</button>
+                    <button class="calc-btn" data-calc="intersection">Intersection (A ∩ B)</button>
+                    <button class="calc-btn" data-calc="difference">Difference (A - B)</button>
+                    <button class="calc-btn" data-calc="symmetric">Symmetric Difference (A ⊕ B)</button>
+                    <button class="calc-btn" data-calc="complement-a">Complement of A (A')</button>
+                    <button class="calc-btn" data-calc="complement-b">Complement of B (B')</button>
+                </div>
+                
+                <div class="calc-results">
+                    <h4>Results:</h4>
+                    <div id="calcResults"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Problems Tab -->
+    <div id="problems" class="tab-content">
+        <div class="problems-container">
+            <h3>Practice Problems</h3>
+            <div class="difficulty-selector">
+                <button class="diff-btn active" data-level="beginner">Beginner</button>
+                <button class="diff-btn" data-level="intermediate">Intermediate</button>
+                <button class="diff-btn" data-level="advanced">Advanced</button>
+            </div>
+            
+            <div class="problem-display">
+                <div id="currentProblem">
+                    <h4>Problem <span id="problemNumber">1</span></h4>
+                    <div id="problemText"></div>
+                    <div id="problemSets"></div>
+                    
+                    <div class="answer-section">
+                        <label for="studentAnswer">Your Answer:</label>
+                        <input type="text" id="studentAnswer" placeholder="Enter your answer as elements separated by commas">
+                        <button id="checkAnswer">Check Answer</button>
+                        <button id="showSolution">Show Solution</button>
+                    </div>
+                    
+                    <div id="feedback" class="feedback"></div>
+                    <div id="solution" class="solution hidden"></div>
+                    
+                    <div class="problem-navigation">
+                        <button id="prevProblem">Previous</button>
+                        <button id="nextProblem">Next Problem</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reference Tab -->
+    <div id="reference" class="tab-content">
+        <div class="reference-container">
+            <h3>Set Theory Quick Reference</h3>
+            
+            <div class="reference-grid">
+                <div class="reference-card">
+                    <h4>Basic Notation</h4>
+                    <ul>
+                        <li><strong>Set:</strong> A collection of distinct objects</li>
+                        <li><strong>Element:</strong> An object in a set (∈)</li>
+                        <li><strong>Empty Set:</strong> ∅ or { }</li>
+                        <li><strong>Universal Set:</strong> U (contains all elements being considered)</li>
+                        <li><strong>Subset:</strong> A ⊆ B (every element of A is in B)</li>
+                    </ul>
+                </div>
+                
+                <div class="reference-card">
+                    <h4>Set Operations</h4>
+                    <ul>
+                        <li><strong>Union:</strong> A ∪ B (all elements in A or B)</li>
+                        <li><strong>Intersection:</strong> A ∩ B (elements in both A and B)</li>
+                        <li><strong>Difference:</strong> A - B (elements in A but not B)</li>
+                        <li><strong>Complement:</strong> A' (elements in U but not A)</li>
+                        <li><strong>Symmetric Difference:</strong> A ⊕ B (elements in A or B, but not both)</li>
+                    </ul>
+                </div>
+                
+                <div class="reference-card">
+                    <h4>Set Laws</h4>
+                    <ul>
+                        <li><strong>Commutative:</strong> A ∪ B = B ∪ A</li>
+                        <li><strong>Associative:</strong> (A ∪ B) ∪ C = A ∪ (B ∪ C)</li>
+                        <li><strong>Distributive:</strong> A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)</li>
+                        <li><strong>De Morgan's:</strong> (A ∪ B)' = A' ∩ B'</li>
+                        <li><strong>Identity:</strong> A ∪ ∅ = A, A ∩ U = A</li>
+                    </ul>
+                </div>
+                
+                <div class="reference-card">
+                    <h4>Venn Diagram Guide</h4>
+                    <ul>
+                        <li><strong>Circle A:</strong> Represents set A</li>
+                        <li><strong>Circle B:</strong> Represents set B</li>
+                        <li><strong>Overlap:</strong> Shows intersection A ∩ B</li>
+                        <li><strong>Outside circles:</strong> Elements not in A or B</li>
+                        <li><strong>Rectangle:</strong> Universal set U</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="examples">
+                <h4>Examples</h4>
+                <div class="example">
+                    <strong>Example 1:</strong> If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}
+                    <ul>
+                        <li>A ∪ B = {1, 2, 3, 4, 5, 6}</li>
+                        <li>A ∩ B = {3, 4}</li>
+                        <li>A - B = {1, 2}</li>
+                        <li>B - A = {5, 6}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
